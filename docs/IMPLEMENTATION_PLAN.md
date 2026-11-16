@@ -10,8 +10,8 @@ This document tracks the phase-by-phase execution of the **TrainlyAI** platform.
 |---|---|---|
 | **Phase 0** | Repository Inspection & Project Planning | Completed |
 | **Phase 1** | App Scaffold & Design System | Completed |
-| **Phase 2** | Supabase Database, Migrations & Security Foundation | Ready to Start |
-| **Phase 3** | Public Homepage & Job Browsing | Pending |
+| **Phase 2** | Supabase Database, Migrations & Security Foundation | Completed |
+| **Phase 3** | Public Homepage & Job Browsing | Ready to Start |
 | **Phase 4** | Admin Authentication & Authorization | Pending |
 | **Phase 5** | Manual Job Management & Approval Workflow | Pending |
 | **Phase 6** | Platform & Referral Management | Pending |
@@ -50,8 +50,8 @@ This document tracks the phase-by-phase execution of the **TrainlyAI** platform.
 - [x] Create `.env.example` and standard `.gitignore`.
 - [x] Verify clean build and typecheck with zero errors.
 
-### [ ] Phase 2: Supabase Database, Migrations & Security Foundation
-- [ ] Create initial SQL migrations for all core tables:
+### [x] Phase 2: Supabase Database, Migrations & Security Foundation
+- [x] Create initial SQL migrations for all core tables:
   - `platforms`
   - `job_categories`
   - `jobs`
@@ -62,13 +62,13 @@ This document tracks the phase-by-phase execution of the **TrainlyAI** platform.
   - `admin_profiles`
   - `admin_audit_logs`
   - `automation_runs`
-- [ ] Add check constraints, foreign keys, and indexes for query performance.
-- [ ] Enable PostgreSQL Row-Level Security (RLS) on all tables with strict policies.
-- [ ] Create public views or restricted query helpers for approved, published jobs only.
-- [ ] Configure Supabase client helpers (browser client, server-component client, route-handler client, privileged admin client).
-- [ ] Create TypeScript database definitions (`lib/supabase/types.ts`).
-- [ ] Create realistic seed data script (`supabase/seed.sql`) clearly marked as development seed data.
-- [ ] Document database setup and migration workflow.
+- [x] Add check constraints, foreign keys, and indexes for query performance.
+- [x] Enable PostgreSQL Row-Level Security (RLS) on all tables with strict policies.
+- [x] Create public views or restricted query helpers for approved, published jobs only.
+- [x] Configure Supabase client helpers (browser client, server-component client, route-handler client, privileged admin client).
+- [x] Create TypeScript database definitions (`lib/supabase/types.ts`).
+- [x] Create realistic seed data script (`supabase/seed.sql`) clearly marked as development seed data.
+- [x] Document database setup and migration workflow.
 
 ### [ ] Phase 3: Public Homepage & Job Browsing
 - [ ] Implement TrainlyAI Homepage (`/`):
