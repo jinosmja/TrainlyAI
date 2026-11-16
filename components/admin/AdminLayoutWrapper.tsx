@@ -14,11 +14,11 @@ export function AdminLayoutWrapper({
   const isLoginPage = pathname === "/admin/login";
 
   if (isLoginPage) {
-    return <div className="min-h-screen bg-muted/20">{children}</div>;
+    return <div className="min-h-screen bg-slate-50/60 dark:bg-slate-950/40">{children}</div>;
   }
 
   return (
-    <div className="flex min-h-screen bg-muted/20">
+    <div className="flex min-h-screen bg-slate-50/50 dark:bg-slate-950/40">
       <AdminSidebar />
       <div className="flex flex-col flex-1 min-w-0">
         <AdminHeader />
@@ -29,4 +29,3 @@ export function AdminLayoutWrapper({
     </div>
   );
 }
-

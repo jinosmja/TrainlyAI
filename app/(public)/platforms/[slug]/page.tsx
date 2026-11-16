@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, ShieldCheck, Briefcase } from "lucide-react";
+import { ArrowLeft, ExternalLink, ShieldCheck, Briefcase, Globe, CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,53 +10,55 @@ interface PlatformDetailPageProps {
 
 export default async function PlatformDetailPage({ params }: PlatformDetailPageProps) {
   const { slug } = await params;
+  const platformName = slug ? slug.replace(/-/g, " ") : "Platform";
 
   return (
-    <div className="py-12 bg-background min-h-screen">
+    <div className="py-12 bg-slate-50/50 dark:bg-slate-950/20 min-h-screen">
       <Container size="default">
         <div className="mb-6">
           <Link
             href="/platforms"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            Back to All Platforms
+            Back to Platform Directory
           </Link>
         </div>
 
-        <div className="border border-border rounded-xl bg-card p-6 md:p-8 space-y-6">
+        {/* Bento Hero Header */}
+        <div className="bento-card bg-card p-6 md:p-8 space-y-6">
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-6">
             <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary font-black text-2xl">
-                {slug ? slug.charAt(0).toUpperCase() : "P"}
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary font-black text-2xl uppercase">
+                {slug ? slug.charAt(0) : "P"}
               </div>
               <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground capitalize">
-                  {slug.replace(/-/g, " ")}
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground capitalize tracking-tight">
+                  {platformName}
                 </h1>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Verified AI Platform Partner
+                  Verified Partner Platform • ISO Standard Attribution
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="text-emerald-600 dark:text-emerald-400 font-medium">
-                <ShieldCheck className="h-3.5 w-3.5 mr-1" />
-                Verified Active
+              <Badge variant="verified" className="text-xs gap-1 font-semibold">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>Verified Active Partner</span>
               </Badge>
             </div>
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-base font-bold text-foreground">Active Opportunities</h2>
-            <p className="text-xs text-muted-foreground">
-              All jobs listed under this platform are actively monitored and re-verified. Applications route securely through our internal tracking system to the official platform portal.
+            <h2 className="text-base font-bold text-foreground">Active Opportunities & Referral Terms</h2>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              All jobs listed under this platform are actively monitored and re-verified. Applications route securely through TrainlyAI&apos;s internal tracking system (<code>/out/[jobSlug]</code>) directly to the official platform portal with verified referral attribution.
             </p>
             <div className="pt-2">
               <Link href={`/jobs?platform=${slug}`}>
-                <Button size="sm" className="gap-1.5">
+                <Button size="sm" className="gap-1.5 font-semibold">
                   <Briefcase className="h-3.5 w-3.5" />
-                  View All Open Listings for this Platform
+                  View All Open Listings for {platformName}
                 </Button>
               </Link>
             </div>
@@ -66,4 +68,3 @@ export default async function PlatformDetailPage({ params }: PlatformDetailPageP
     </div>
   );
 }
-

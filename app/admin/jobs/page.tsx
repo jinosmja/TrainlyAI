@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { PlusCircle, Search, Filter, Briefcase, ExternalLink } from "lucide-react";
+import { PlusCircle, Search, Filter, Briefcase, ExternalLink, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default function AdminJobsPage() {
   const jobs = [
@@ -14,7 +13,7 @@ export default function AdminJobsPage() {
       status: "approved",
       eligibility: "Worldwide",
       pay: "$20 - $40 USD/hr",
-      lastChecked: "2 days ago",
+      lastChecked: "2 hours ago",
     },
     {
       id: "2",
@@ -24,7 +23,7 @@ export default function AdminJobsPage() {
       status: "approved",
       eligibility: "Selected countries",
       pay: "$35 - $55 USD/hr",
-      lastChecked: "1 day ago",
+      lastChecked: "5 hours ago",
     },
     {
       id: "3",
@@ -34,7 +33,7 @@ export default function AdminJobsPage() {
       status: "approved",
       eligibility: "Worldwide",
       pay: "$18 - $30 USD/hr",
-      lastChecked: "Today",
+      lastChecked: "1 day ago",
     },
     {
       id: "4",
@@ -44,7 +43,7 @@ export default function AdminJobsPage() {
       status: "approved",
       eligibility: "Selected countries",
       pay: "$40 - $65 USD/hr",
-      lastChecked: "3 days ago",
+      lastChecked: "1 day ago",
     },
   ];
 
@@ -56,86 +55,99 @@ export default function AdminJobsPage() {
             Job Catalog Management
           </h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Manage all draft, published, and archived listings.
+            Manage all published, draft, closed, and rejected AI opportunity records.
           </p>
         </div>
 
-        <Button size="sm" className="gap-1.5 text-xs font-semibold">
+        <Button size="sm" className="gap-1.5 text-xs font-semibold shadow-xs">
           <PlusCircle className="h-3.5 w-3.5" />
-          Add Job Manually
+          <span>Add Job Manually</span>
         </Button>
       </div>
 
-      <Card className="border-border">
-        <CardHeader className="p-4 border-b border-border/80">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="relative flex-1 max-w-sm">
+      <div className="bento-card bg-card p-0 overflow-hidden">
+        {/* Status Filter Tabs & Search Bar */}
+        <div className="p-4 border-b border-border space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-1.5 text-xs font-semibold">
+              <span className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground font-bold shadow-xs cursor-pointer">
+                All Published (4)
+              </span>
+              <span className="px-3 py-1.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground cursor-pointer transition-colors">
+                Pending Review (0)
+              </span>
+              <span className="px-3 py-1.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground cursor-pointer transition-colors">
+                Drafts (0)
+              </span>
+              <span className="px-3 py-1.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground cursor-pointer transition-colors">
+                Closed / Expired (0)
+              </span>
+              <span className="px-3 py-1.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground cursor-pointer transition-colors">
+                Rejected (0)
+              </span>
+            </div>
+
+            <div className="relative flex-1 sm:max-w-xs">
               <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="Search jobs by title or platform..."
-                className="h-8 w-full rounded-md border border-input bg-background pl-8 pr-3 text-xs"
+                placeholder="Filter by title or platform..."
+                className="h-8 w-full rounded-lg border border-input bg-card pl-8 pr-3 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" className="h-8 text-xs gap-1">
-                <Filter className="h-3 w-3" />
-                All Statuses
-              </Button>
-            </div>
           </div>
-        </CardHeader>
+        </div>
 
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs text-left">
-              <thead className="bg-muted/40 border-b border-border text-muted-foreground font-semibold">
-                <tr>
-                  <th className="px-4 py-3">Title</th>
-                  <th className="px-4 py-3">Platform</th>
-                  <th className="px-4 py-3">Eligibility</th>
-                  <th className="px-4 py-3">Compensation</th>
-                  <th className="px-4 py-3">Status</th>
-                  <th className="px-4 py-3">Last Verified</th>
-                  <th className="px-4 py-3 text-right">Actions</th>
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs text-left">
+            <thead className="bg-muted/40 border-b border-border text-muted-foreground font-semibold">
+              <tr>
+                <th className="px-4 py-3">Title</th>
+                <th className="px-4 py-3">Platform</th>
+                <th className="px-4 py-3">Eligibility</th>
+                <th className="px-4 py-3">Compensation</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Last Verified</th>
+                <th className="px-4 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {jobs.map((job) => (
+                <tr key={job.id} className="hover:bg-muted/20 transition-colors">
+                  <td className="px-4 py-3 font-semibold text-foreground">
+                    {job.title}
+                  </td>
+                  <td className="px-4 py-3 text-muted-foreground">{job.platform}</td>
+                  <td className="px-4 py-3">
+                    <Badge
+                      variant={job.eligibility === "Worldwide" ? "worldwide" : "selected"}
+                      className="text-[10px]"
+                    >
+                      {job.eligibility}
+                    </Badge>
+                  </td>
+                  <td className="px-4 py-3 font-mono text-slate-700 dark:text-slate-300">{job.pay}</td>
+                  <td className="px-4 py-3">
+                    <Badge variant="verified" className="text-[10px] capitalize">
+                      {job.status}
+                    </Badge>
+                  </td>
+                  <td className="px-4 py-3 text-muted-foreground">{job.lastChecked}</td>
+                  <td className="px-4 py-3 text-right space-x-2">
+                    <Link
+                      href={`/jobs/${job.slug}`}
+                      target="_blank"
+                      className="inline-flex items-center gap-1 text-primary hover:underline font-semibold"
+                    >
+                      Preview <ExternalLink className="h-3 w-3" />
+                    </Link>
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {jobs.map((job) => (
-                  <tr key={job.id} className="hover:bg-muted/20 transition-colors">
-                    <td className="px-4 py-3 font-semibold text-foreground">
-                      {job.title}
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">{job.platform}</td>
-                    <td className="px-4 py-3">
-                      <Badge variant="outline" className="text-[10px]">
-                        {job.eligibility}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 font-mono text-muted-foreground">{job.pay}</td>
-                    <td className="px-4 py-3">
-                      <Badge variant="success" className="text-[10px] capitalize">
-                        {job.status}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">{job.lastChecked}</td>
-                    <td className="px-4 py-3 text-right">
-                      <Link
-                        href={`/jobs/${job.slug}`}
-                        target="_blank"
-                        className="inline-flex items-center gap-1 text-primary hover:underline font-medium"
-                      >
-                        Preview <ExternalLink className="h-3 w-3" />
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
-

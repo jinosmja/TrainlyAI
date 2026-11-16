@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles, Globe, Shield, ArrowUpRight } from "lucide-react";
+import { Sparkles, Globe, Shield, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 
 export function Footer() {
@@ -9,25 +9,25 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand info */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5 font-bold text-lg">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <Link href="/" className="flex items-center gap-2.5 font-bold text-lg group">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary text-primary-foreground">
                 <Sparkles className="h-4 w-4" />
               </div>
               <span className="text-foreground font-black text-xl tracking-tight">
-                Trainly<span className="text-primary">AI</span>
+                Trainly<span className="text-primary font-bold">AI</span>
               </span>
             </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
-              Global AI Training & Career Opportunities. Discover legitimate freelance, contract, and full-time roles in AI evaluation, LLM training, data annotation, and domain expertise worldwide.
+            <p className="text-xs text-muted-foreground leading-relaxed max-w-sm">
+              Global AI Training & Career Opportunities. Discover legitimate freelance, contract, and full-time roles in AI model evaluation, LLM training, data annotation, and domain expertise worldwide.
             </p>
-            <div className="flex items-center gap-3 text-xs text-muted-foreground pt-1">
-              <span className="inline-flex items-center gap-1 font-medium bg-muted/60 px-2.5 py-1 rounded-md border border-border">
+            <div className="flex flex-wrap items-center gap-2.5 text-xs text-muted-foreground pt-1">
+              <span className="inline-flex items-center gap-1.5 font-medium bg-muted/70 px-2.5 py-1 rounded-md border border-border">
                 <Globe className="h-3.5 w-3.5 text-primary" />
                 Global Platform
               </span>
-              <span className="inline-flex items-center gap-1 font-medium bg-muted/60 px-2.5 py-1 rounded-md border border-border">
-                <Shield className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-                Verified Sources
+              <span className="inline-flex items-center gap-1.5 font-medium bg-teal-50 dark:bg-teal-950/40 text-teal-800 dark:text-teal-300 px-2.5 py-1 rounded-md border border-teal-200 dark:border-teal-800">
+                <Shield className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
+                100% Human Verified
               </span>
             </div>
           </div>
@@ -37,29 +37,29 @@ export function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
               Opportunities
             </h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <ul className="space-y-2 text-xs text-muted-foreground">
               <li>
                 <Link href="/jobs" className="hover:text-foreground transition-colors">
                   All AI Jobs
                 </Link>
               </li>
               <li>
-                <Link href="/categories/ai-evaluation" className="hover:text-foreground transition-colors">
+                <Link href="/jobs?category=ai-evaluation" className="hover:text-foreground transition-colors">
                   AI Evaluator Roles
                 </Link>
               </li>
               <li>
-                <Link href="/categories/ai-trainer" className="hover:text-foreground transition-colors">
+                <Link href="/jobs?category=ai-trainer" className="hover:text-foreground transition-colors">
                   LLM Trainer Roles
                 </Link>
               </li>
               <li>
-                <Link href="/categories/data-annotation" className="hover:text-foreground transition-colors">
+                <Link href="/jobs?category=data-annotation" className="hover:text-foreground transition-colors">
                   Data Annotation
                 </Link>
               </li>
               <li>
-                <Link href="/categories/subject-matter-experts" className="hover:text-foreground transition-colors">
+                <Link href="/jobs?category=subject-matter-experts" className="hover:text-foreground transition-colors">
                   Subject-Matter Experts
                 </Link>
               </li>
@@ -71,7 +71,7 @@ export function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
               Explore
             </h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <ul className="space-y-2 text-xs text-muted-foreground">
               <li>
                 <Link href="/platforms" className="hover:text-foreground transition-colors">
                   Platform Directory
@@ -100,10 +100,10 @@ export function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
               Trust & Legal
             </h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <ul className="space-y-2 text-xs text-muted-foreground">
               <li>
-                <Link href="/referral-disclosure" className="hover:text-foreground transition-colors font-medium text-foreground/80 flex items-center gap-1">
-                  Referral Disclosure <ArrowUpRight className="h-3 w-3" />
+                <Link href="/referral-disclosure" className="hover:text-foreground transition-colors font-medium text-foreground flex items-center gap-1">
+                  Referral Disclosure <ArrowUpRight className="h-3 w-3 text-primary" />
                 </Link>
               </li>
               <li>
@@ -117,7 +117,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/admin/login" className="hover:text-foreground transition-colors text-xs text-muted-foreground/80">
+                <Link href="/admin/login" className="hover:text-foreground transition-colors text-muted-foreground/80">
                   Moderator Sign In
                 </Link>
               </li>
@@ -126,9 +126,10 @@ export function Footer() {
         </div>
 
         {/* Mandatory Referral Disclosure Bar */}
-        <div className="mt-10 pt-6 border-t border-border/80">
-          <div className="rounded-lg bg-muted/40 p-4 border border-border/60 text-xs text-muted-foreground leading-relaxed">
-            <p className="font-semibold text-foreground/90 mb-1">
+        <div className="mt-10 pt-6 border-t border-border">
+          <div className="rounded-xl bg-slate-50 dark:bg-slate-900/60 p-4 border border-border text-xs text-muted-foreground leading-relaxed">
+            <p className="font-bold text-foreground mb-1 flex items-center gap-1.5">
+              <CheckCircle2 className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
               Referral & Affiliate Transparency Notice
             </p>
             <p>
@@ -138,11 +139,10 @@ export function Footer() {
 
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
             <p>© {new Date().getFullYear()} TrainlyAI. All rights reserved. Global AI Career Aggregation.</p>
-            <p className="font-mono text-[11px]">Timestamps stored in UTC • ISO 3166-1 / ISO 4217 Compliant</p>
+            <p className="font-mono text-[11px]">Timestamps in UTC • ISO 3166-1 / ISO 4217 Compliant</p>
           </div>
         </div>
       </Container>
     </footer>
   );
 }
-

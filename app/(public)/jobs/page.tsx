@@ -1,11 +1,23 @@
 import Link from "next/link";
-import { Search, Filter, Globe, DollarSign, CheckCircle2, RotateCcw } from "lucide-react";
+import {
+  Search,
+  Filter,
+  Globe,
+  DollarSign,
+  CheckCircle2,
+  RotateCcw,
+  MapPin,
+  HelpCircle,
+  Briefcase,
+  Layers,
+  ArrowRight,
+  ShieldCheck,
+} from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 
-const SAMPLE_JOBS = [
+const ALL_JOBS = [
   {
     slug: "senior-ai-evaluator-general-reasoning",
     title: "Senior AI Evaluator — General Reasoning",
@@ -17,7 +29,7 @@ const SAMPLE_JOBS = [
     payMax: 40,
     payCurrency: "USD",
     payPeriod: "hour",
-    category: "AI Evaluation",
+    category: "AI Model Evaluation",
     skills: ["Critical Thinking", "Fact Checking", "Writing"],
     verifiedDate: "Verified 2 days ago",
     summary:
@@ -78,167 +90,209 @@ const SAMPLE_JOBS = [
 
 export default function JobsPage() {
   return (
-    <div className="py-10 bg-background min-h-screen">
+    <div className="py-10 bg-slate-50/50 dark:bg-slate-950/20 min-h-screen">
       <Container size="default">
         {/* Page Title & Search Header */}
         <div className="space-y-4 mb-8">
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-primary mb-1">
-              Global Job Directory
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 mb-1">
+              <Globe className="h-3.5 w-3.5" />
+              <span>Universal Job Directory</span>
             </div>
             <h1 className="text-3xl font-extrabold text-foreground tracking-tight sm:text-4xl">
               Discover AI Training & Evaluation Roles
             </h1>
-            <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-2xl">
               Explore verified freelance and contract AI opportunities worldwide. Every listing is reviewed by human moderators before publication.
             </p>
           </div>
 
-          {/* Search Bar */}
+          {/* Search Bar - Swiss Precision with AI-Native Luminous Ring */}
           <div className="flex flex-col sm:flex-row gap-3 pt-2">
-            <div className="relative flex-1">
+            <div className="relative flex-1 shadow-xs">
               <Search className="absolute left-3.5 top-3 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
                 placeholder="Search jobs by keyword, required skill, or platform..."
-                className="h-10 w-full rounded-lg border border-input bg-card pl-10 pr-4 text-sm text-foreground shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="h-10 w-full rounded-lg border border-input bg-card pl-10 pr-4 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               />
             </div>
-            <Button className="font-semibold shadow-sm shrink-0">
+            <Button className="font-semibold shadow-xs shrink-0 text-xs">
               Apply Filters
             </Button>
-            <Button variant="outline" className="gap-1.5 shrink-0 text-xs">
-              <RotateCcw className="h-3.5 w-3.5" />
-              Reset Filters
-            </Button>
+            <Link href="/jobs">
+              <Button variant="outline" className="gap-1.5 shrink-0 text-xs w-full sm:w-auto">
+                <RotateCcw className="h-3.5 w-3.5" />
+                Reset Filters
+              </Button>
+            </Link>
           </div>
         </div>
 
-        {/* Layout: Sidebar Filters + Job Results */}
+        {/* Layout: Bento Filter Sidebar + Bento Job List */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Filters Sidebar */}
-          <aside className="space-y-6 lg:border-r lg:border-border lg:pr-6">
-            <div className="flex items-center justify-between pb-3 border-b border-border">
-              <span className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5">
-                <Filter className="h-3.5 w-3.5 text-primary" />
-                Filter Roles
-              </span>
-              <span className="text-xs text-muted-foreground font-mono">4 results</span>
-            </div>
-
-            {/* Category Filter */}
-            <div className="space-y-2.5">
-              <label className="text-xs font-bold uppercase text-muted-foreground tracking-wider">
-                Category
-              </label>
-              <div className="space-y-1.5 text-xs text-foreground/80">
-                {["AI Model Evaluation", "LLM & AI Trainers", "Data Annotation", "Coding & Software", "Subject-Matter Experts"].map((cat) => (
-                  <label key={cat} className="flex items-center gap-2 cursor-pointer hover:text-foreground">
-                    <input type="checkbox" className="rounded border-input text-primary focus:ring-primary h-3.5 w-3.5" />
-                    <span>{cat}</span>
-                  </label>
-                ))}
+          <aside className="space-y-6">
+            <div className="bento-card-compact bg-card space-y-6">
+              <div className="flex items-center justify-between pb-3 border-b border-border">
+                <span className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5">
+                  <Filter className="h-3.5 w-3.5 text-primary" />
+                  Filter Roles
+                </span>
+                <span className="text-[11px] text-muted-foreground font-mono bg-muted px-2 py-0.5 rounded">
+                  4 active
+                </span>
               </div>
-            </div>
 
-            {/* Country Eligibility Filter */}
-            <div className="space-y-2.5">
-              <label className="text-xs font-bold uppercase text-muted-foreground tracking-wider">
-                Country Eligibility
-              </label>
-              <div className="space-y-1.5 text-xs text-foreground/80">
-                {["Worldwide (All Countries)", "Selected Countries Only", "Not Confirmed"].map((elig) => (
-                  <label key={elig} className="flex items-center gap-2 cursor-pointer hover:text-foreground">
-                    <input type="checkbox" className="rounded border-input text-primary focus:ring-primary h-3.5 w-3.5" />
-                    <span>{elig}</span>
-                  </label>
-                ))}
+              {/* Country Eligibility Filter (Mandatory Indicator Section) */}
+              <div className="space-y-2.5">
+                <label className="text-xs font-bold uppercase text-muted-foreground tracking-wider flex items-center gap-1">
+                  <Globe className="h-3 w-3 text-primary" />
+                  Country Eligibility
+                </label>
+                <div className="space-y-2 text-xs text-foreground/90">
+                  {[
+                    { label: "Worldwide (Confirmed)", variant: "worldwide" as const, desc: "Open to all countries" },
+                    { label: "Selected Countries Only", variant: "selected" as const, desc: "Specific location list" },
+                    { label: "Not Confirmed", variant: "unconfirmed" as const, desc: "Pending source check" },
+                  ].map((elig) => (
+                    <label key={elig.label} className="flex items-start gap-2.5 cursor-pointer hover:text-foreground group">
+                      <input type="checkbox" className="rounded border-input text-primary focus:ring-primary h-4 w-4 mt-0.5" />
+                      <div>
+                        <div className="font-semibold text-slate-900 dark:text-slate-100">{elig.label}</div>
+                        <div className="text-[10px] text-muted-foreground">{elig.desc}</div>
+                      </div>
+                    </label>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* Platform Filter */}
-            <div className="space-y-2.5">
-              <label className="text-xs font-bold uppercase text-muted-foreground tracking-wider">
-                Platform
-              </label>
-              <div className="space-y-1.5 text-xs text-foreground/80">
-                {["DataAnnotation", "Outlier", "Mercor", "Alignerr", "Micro1", "TELUS AI"].map((plat) => (
-                  <label key={plat} className="flex items-center gap-2 cursor-pointer hover:text-foreground">
-                    <input type="checkbox" className="rounded border-input text-primary focus:ring-primary h-3.5 w-3.5" />
-                    <span>{plat}</span>
-                  </label>
-                ))}
+              {/* Category Filter */}
+              <div className="space-y-2.5 pt-4 border-t border-border">
+                <label className="text-xs font-bold uppercase text-muted-foreground tracking-wider flex items-center gap-1">
+                  <Briefcase className="h-3 w-3 text-teal-600" />
+                  Category
+                </label>
+                <div className="space-y-1.5 text-xs text-foreground/80">
+                  {["AI Model Evaluation", "LLM & AI Trainers", "Data Annotation", "Coding & Software", "Subject-Matter Experts", "Language & Translation"].map((cat) => (
+                    <label key={cat} className="flex items-center gap-2 cursor-pointer hover:text-foreground">
+                      <input type="checkbox" className="rounded border-input text-primary focus:ring-primary h-3.5 w-3.5" />
+                      <span>{cat}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Work Arrangement Filter */}
+              <div className="space-y-2.5 pt-4 border-t border-border">
+                <label className="text-xs font-bold uppercase text-muted-foreground tracking-wider">
+                  Work Arrangement
+                </label>
+                <div className="space-y-1.5 text-xs text-foreground/80">
+                  {["Remote (Anywhere)", "Hybrid / Regional", "Onsite"].map((arr) => (
+                    <label key={arr} className="flex items-center gap-2 cursor-pointer hover:text-foreground">
+                      <input type="checkbox" className="rounded border-input text-primary focus:ring-primary h-3.5 w-3.5" />
+                      <span>{arr}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Platform Filter */}
+              <div className="space-y-2.5 pt-4 border-t border-border">
+                <label className="text-xs font-bold uppercase text-muted-foreground tracking-wider flex items-center gap-1">
+                  <Layers className="h-3 w-3 text-indigo-600" />
+                  Platform
+                </label>
+                <div className="space-y-1.5 text-xs text-foreground/80">
+                  {["DataAnnotation", "Outlier", "Mercor", "Alignerr", "Micro1", "TELUS AI"].map((plat) => (
+                    <label key={plat} className="flex items-center gap-2 cursor-pointer hover:text-foreground">
+                      <input type="checkbox" className="rounded border-input text-primary focus:ring-primary h-3.5 w-3.5" />
+                      <span>{plat}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
           </aside>
 
-          {/* Job List Results */}
+          {/* Job List Results — Bento Cards */}
           <main className="lg:col-span-3 space-y-4">
-            <div className="flex items-center justify-between text-xs text-muted-foreground pb-2">
+            <div className="flex items-center justify-between text-xs text-muted-foreground pb-1">
               <span>Showing 4 verified AI opportunities</span>
-              <span>Sorted by: Newest First</span>
+              <span className="font-medium">Sorted by: Recently Verified</span>
             </div>
 
             <div className="space-y-4">
-              {SAMPLE_JOBS.map((job) => (
-                <Card key={job.slug} className="border-border hover:shadow-sm transition-all">
-                  <CardHeader className="space-y-2.5">
+              {ALL_JOBS.map((job) => (
+                <div key={job.slug} className="bento-card bg-card flex flex-col justify-between">
+                  <div className="space-y-3">
+                    {/* Top Row: Platform, Eligibility Badge & Compensation */}
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <Badge variant="outline" className="font-semibold text-xs">
+                        <span className="text-xs font-bold text-foreground px-2.5 py-0.5 rounded-md bg-muted border border-border">
                           {job.platform}
-                        </Badge>
+                        </span>
                         <Badge
-                          variant={job.eligibilityType === "worldwide" ? "worldwide" : "info"}
-                          className="text-[11px]"
+                          variant={job.eligibilityType === "worldwide" ? "worldwide" : "selected"}
+                          className="gap-1 text-xs"
                         >
+                          {job.eligibilityType === "worldwide" ? (
+                            <Globe className="h-3 w-3" />
+                          ) : (
+                            <MapPin className="h-3 w-3" />
+                          )}
                           {job.countryEligibility}
                         </Badge>
                         <span className="text-xs text-muted-foreground">• {job.workArrangement}</span>
                       </div>
-                      <div className="text-sm font-bold text-foreground">
-                        ${job.payMin} - ${job.payMax} {job.payCurrency} / {job.payPeriod}
+                      
+                      <div className="text-sm font-extrabold text-foreground font-mono">
+                        ${job.payMin} - ${job.payMax} {job.payCurrency}
+                        <span className="text-xs font-normal text-muted-foreground font-sans ml-1">/ {job.payPeriod}</span>
                       </div>
                     </div>
 
+                    {/* Job Title */}
                     <Link href={`/jobs/${job.slug}`}>
-                      <CardTitle className="text-lg font-bold hover:text-primary transition-colors">
+                      <h3 className="text-lg font-bold text-foreground hover:text-primary transition-colors">
                         {job.title}
-                      </CardTitle>
+                      </h3>
                     </Link>
 
-                    <CardDescription className="text-xs text-muted-foreground line-clamp-2">
+                    {/* Summary */}
+                    <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
                       {job.summary}
-                    </CardDescription>
-                  </CardHeader>
+                    </p>
 
-                  <CardContent className="space-y-2 pt-0">
-                    <div className="flex flex-wrap gap-1.5">
+                    {/* Skill Tags */}
+                    <div className="flex flex-wrap gap-1.5 pt-1">
                       {job.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="rounded bg-muted px-2 py-0.5 text-[11px] text-muted-foreground font-medium"
+                          className="rounded-md bg-muted px-2.5 py-0.5 text-[11px] text-slate-700 dark:text-slate-300 font-medium"
                         >
                           {skill}
                         </span>
                       ))}
                     </div>
-                  </CardContent>
+                  </div>
 
-                  <CardFooter className="flex items-center justify-between pt-3 border-t border-border/60">
+                  {/* Card Footer: Single Apply Now Action */}
+                  <div className="flex items-center justify-between pt-4 mt-4 border-t border-border">
                     <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1">
                       <CheckCircle2 className="h-3.5 w-3.5" />
-                      {job.verifiedDate}
+                      <span>{job.verifiedDate}</span>
                     </div>
 
-                    {/* Non-negotiable: Single Apply Now button routing strictly to /out/[jobSlug] */}
+                    {/* Non-negotiable: Single Apply Now action strictly routing through /out/[jobSlug] */}
                     <Link href={`/out/${job.slug}`}>
-                      <Button size="sm" className="font-semibold shadow-sm">
+                      <Button size="sm" className="font-semibold shadow-xs">
                         Apply Now
                       </Button>
                     </Link>
-                  </CardFooter>
-                </Card>
+                  </div>
+                </div>
               ))}
             </div>
           </main>
@@ -247,4 +301,3 @@ export default function JobsPage() {
     </div>
   );
 }
-

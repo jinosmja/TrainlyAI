@@ -8,17 +8,22 @@ import {
   Radio,
   BarChart3,
   ArrowUpRight,
-  ShieldAlert,
+  ShieldCheck,
+  AlertTriangle,
+  Layers,
+  Copy,
+  Activity,
+  FileText,
+  Filter,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-const STATS = [
+const KPI_STATS = [
   {
     label: "Total Jobs Tracked",
     value: "4",
-    subtext: "Across 4 vetted platforms",
+    subtext: "Across 4 active platforms",
     icon: Briefcase,
     color: "text-primary",
     bgColor: "bg-primary/10",
@@ -32,129 +37,242 @@ const STATS = [
     bgColor: "bg-emerald-50 dark:bg-emerald-950/40",
   },
   {
-    label: "Pending Review",
+    label: "Pending Review Queue",
     value: "0",
-    subtext: "Queue cleared",
+    subtext: "All items reviewed",
     icon: Clock,
     color: "text-amber-600 dark:text-amber-400",
     bgColor: "bg-amber-50 dark:bg-amber-950/40",
   },
   {
-    label: "Total Referral Clicks",
+    label: "Referral Clicks",
     value: "0",
     subtext: "Measured via /out/[jobSlug]",
     icon: Share2,
-    color: "text-indigo-600 dark:text-indigo-400",
-    bgColor: "bg-indigo-50 dark:bg-indigo-950/40",
+    color: "text-teal-600 dark:text-teal-400",
+    bgColor: "bg-teal-50 dark:bg-teal-950/40",
+  },
+];
+
+const RECENT_JOBS = [
+  {
+    title: "Senior AI Evaluator — General Reasoning",
+    platform: "DataAnnotation",
+    status: "approved",
+    eligibility: "Worldwide",
+    pay: "$20 - $40 USD/hr",
+    lastChecked: "2 hours ago",
+    duplicateRisk: "None",
+  },
+  {
+    title: "Python Software Specialist — AI Model Training",
+    platform: "Outlier",
+    status: "approved",
+    eligibility: "Selected countries",
+    pay: "$35 - $55 USD/hr",
+    lastChecked: "5 hours ago",
+    duplicateRisk: "None",
+  },
+  {
+    title: "Multilingual AI Safety & Localization Reviewer",
+    platform: "Mercor",
+    status: "approved",
+    eligibility: "Worldwide",
+    pay: "$18 - $30 USD/hr",
+    lastChecked: "1 day ago",
+    duplicateRisk: "None",
+  },
+  {
+    title: "STEM AI Trainer — Advanced Mathematics & Physics",
+    platform: "Alignerr",
+    status: "approved",
+    eligibility: "Selected countries",
+    pay: "$40 - $65 USD/hr",
+    lastChecked: "1 day ago",
+    duplicateRisk: "None",
   },
 ];
 
 export default function AdminDashboardPage() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
-            Admin Overview & Moderation Dashboard
+            Operational Dashboard & Review Console
           </h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Operational status and content moderation for TrainlyAI.
+            Real-time job aggregation health, human moderation queue, and referral click monitoring.
           </p>
         </div>
 
         <div className="flex items-center gap-2.5">
           <Link href="/admin/pending">
             <Button variant="outline" size="sm" className="gap-1.5 text-xs font-semibold">
-              <Clock className="h-3.5 w-3.5" />
-              Review Queue (0)
+              <Clock className="h-3.5 w-3.5 text-teal-600" />
+              <span>Pending Queue (0)</span>
             </Button>
           </Link>
           <Link href="/admin/jobs">
-            <Button size="sm" className="gap-1.5 text-xs font-semibold">
+            <Button size="sm" className="gap-1.5 text-xs font-semibold shadow-xs">
               <PlusCircle className="h-3.5 w-3.5" />
-              Add Manual Job
+              <span>Add Job Manually</span>
             </Button>
           </Link>
         </div>
       </div>
 
-      {/* Metrics Grid */}
+      {/* KPI Cards Grid — Data-Dense Style (#28) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {STATS.map((stat) => {
+        {KPI_STATS.map((stat) => {
           const Icon = stat.icon;
           return (
-            <Card key={stat.label} className="border-border">
-              <CardContent className="p-5 flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-medium text-muted-foreground">{stat.label}</div>
-                  <div className="text-2xl font-black text-foreground mt-1">{stat.value}</div>
-                  <div className="text-[11px] text-muted-foreground mt-0.5">{stat.subtext}</div>
-                </div>
-                <div className={`p-3 rounded-xl ${stat.bgColor} ${stat.color}`}>
-                  <Icon className="h-5 w-5" />
-                </div>
-              </CardContent>
-            </Card>
+            <div key={stat.label} className="bento-card-compact bg-card flex items-center justify-between">
+              <div>
+                <div className="text-xs font-semibold text-muted-foreground">{stat.label}</div>
+                <div className="text-2xl font-black text-foreground font-mono mt-1">{stat.value}</div>
+                <div className="text-[11px] text-muted-foreground mt-0.5">{stat.subtext}</div>
+              </div>
+              <div className={`p-3 rounded-xl ${stat.bgColor} ${stat.color}`}>
+                <Icon className="h-5 w-5" />
+              </div>
+            </div>
           );
         })}
       </div>
 
-      {/* Quick Action Modules */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Moderation Checklist */}
-        <Card className="border-border">
-          <CardHeader className="pb-3 border-b border-border/80">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-base font-bold flex items-center gap-2">
-                <Clock className="h-4 w-4 text-primary" />
-                Pending Moderation Queue
-              </CardTitle>
-              <Badge variant="outline" className="text-xs">0 awaiting</Badge>
-            </div>
-          </CardHeader>
-          <CardContent className="pt-4 space-y-3">
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              No jobs currently awaiting review. All ingested records from automated connectors or manual submissions are gated here and cannot be published without human sign-off.
-            </p>
-            <div className="pt-2">
-              <Link href="/admin/pending">
-                <Button variant="outline" size="sm" className="w-full justify-center text-xs">
-                  Open Pending Queue
+      {/* Two-Column Operational Bento Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column: Recent Jobs & Moderation Queue */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bento-card bg-card p-0 overflow-hidden">
+            <div className="p-4 border-b border-border flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                  <Briefcase className="h-4 w-4 text-primary" />
+                  <span>Recently Verified Jobs</span>
+                </h3>
+                <p className="text-[11px] text-muted-foreground">
+                  Latest listings published following human moderator verification.
+                </p>
+              </div>
+              <Link href="/admin/jobs">
+                <Button variant="ghost" size="sm" className="text-xs text-primary font-semibold gap-1">
+                  <span>View All (4)</span>
+                  <ArrowUpRight className="h-3 w-3" />
                 </Button>
               </Link>
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Source Connectors Health */}
-        <Card className="border-border">
-          <CardHeader className="pb-3 border-b border-border/80">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-base font-bold flex items-center gap-2">
-                <Radio className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                Authorized Ingestion Connectors
-              </CardTitle>
-              <Badge variant="outline" className="text-xs text-emerald-600 dark:text-emerald-400">
-                Ethical Gate Active
-              </Badge>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs text-left">
+                <thead className="bg-muted/40 border-b border-border text-muted-foreground font-semibold">
+                  <tr>
+                    <th className="px-4 py-2.5">Job Title</th>
+                    <th className="px-4 py-2.5">Platform</th>
+                    <th className="px-4 py-2.5">Eligibility</th>
+                    <th className="px-4 py-2.5">Stated Compensation</th>
+                    <th className="px-4 py-2.5">Status</th>
+                    <th className="px-4 py-2.5">Duplicate Check</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {RECENT_JOBS.map((job) => (
+                    <tr key={job.title} className="hover:bg-muted/30 transition-colors">
+                      <td className="px-4 py-3 font-semibold text-foreground max-w-[220px] truncate">
+                        {job.title}
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground">{job.platform}</td>
+                      <td className="px-4 py-3">
+                        <Badge
+                          variant={job.eligibility === "Worldwide" ? "worldwide" : "selected"}
+                          className="text-[10px]"
+                        >
+                          {job.eligibility}
+                        </Badge>
+                      </td>
+                      <td className="px-4 py-3 font-mono font-medium text-slate-700 dark:text-slate-300">
+                        {job.pay}
+                      </td>
+                      <td className="px-4 py-3">
+                        <Badge variant="verified" className="text-[10px] capitalize">
+                          {job.status}
+                        </Badge>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                          {job.duplicateRisk}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          </CardHeader>
-          <CardContent className="pt-4 space-y-3">
+          </div>
+        </div>
+
+        {/* Right Column: System Status & Duplicate Detection Monitor */}
+        <div className="space-y-6">
+          {/* Duplicate Detection Monitor */}
+          <div className="bento-card bg-card space-y-4">
+            <div className="flex items-center justify-between border-b border-border pb-3">
+              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                <Copy className="h-4 w-4 text-teal-600" />
+                <span>Duplicate Detection</span>
+              </h3>
+              <Badge variant="verified" className="text-[10px]">Active</Badge>
+            </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Connectors are restricted to explicitly permitted APIs and feeds. Background automation places all discovered records strictly in Pending Review with automated duplicate matching.
+              Automated multi-signal matching (canonical URL fingerprint, external job ID, title similarity) scans newly ingested records.
             </p>
-            <div className="pt-2">
-              <Link href="/admin/sources">
-                <Button variant="outline" size="sm" className="w-full justify-center text-xs">
-                  Manage Ingestion Sources
-                </Button>
-              </Link>
+            <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-border text-xs space-y-1">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Exact URL Matches:</span>
+                <span className="font-mono font-bold text-foreground">0</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Probable Title Duplicates:</span>
+                <span className="font-mono font-bold text-foreground">0</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Resolution Status:</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold">Clean</span>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+
+          {/* Automated Discovery Connectors Health */}
+          <div className="bento-card bg-card space-y-4">
+            <div className="flex items-center justify-between border-b border-border pb-3">
+              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                <Radio className="h-4 w-4 text-primary" />
+                <span>Automated Discovery</span>
+              </h3>
+              <Badge variant="outline" className="text-[10px]">2 Connectors</Badge>
+            </div>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Background workers poll authorized APIs and feeds. All discovered records enter Pending Review automatically.
+            </p>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-muted/60">
+                <span className="font-semibold text-foreground">DataAnnotation Feed</span>
+                <Badge variant="verified" className="text-[10px]">Healthy</Badge>
+              </div>
+              <div className="flex items-center justify-between p-2 rounded-lg bg-muted/60">
+                <span className="font-semibold text-foreground">Outlier Partner API</span>
+                <Badge variant="verified" className="text-[10px]">Healthy</Badge>
+              </div>
+            </div>
+            <Link href="/admin/sources" className="block pt-1">
+              <Button variant="outline" size="sm" className="w-full text-xs font-semibold">
+                Manage Ingestion Sources
+              </Button>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-

@@ -1,10 +1,24 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+export const viewport: Viewport = {
+  themeColor: "#4F46E5",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
-  title: "TrainlyAI — Discover. Train. Earn. | Global AI Career Opportunities",
+  title: "TrainlyAI — Discover. Train. Earn. | Global AI Training & Career Opportunities",
   description:
-    "Global AI Training & Career Opportunities. A platform to discover legitimate AI trainer, AI evaluator, data annotation, and subject-matter expert opportunities worldwide.",
+    "Discover legitimate remote and global opportunities in AI model training, AI evaluation, data annotation, and domain expertise. 100% human-verified opportunities worldwide.",
   keywords: [
     "AI trainer jobs",
     "AI evaluator",
@@ -12,9 +26,11 @@ export const metadata: Metadata = {
     "data annotation",
     "remote AI jobs",
     "TrainlyAI",
-    "global freelance AI jobs",
+    "freelance AI jobs",
+    "RLHF",
+    "model evaluation",
   ],
-  authors: [{ name: "TrainlyAI Team" }],
+  authors: [{ name: "TrainlyAI Global Team" }],
   openGraph: {
     title: "TrainlyAI — Discover. Train. Earn.",
     description:
@@ -22,6 +38,11 @@ export const metadata: Metadata = {
     url: "https://trainlyai.com",
     siteName: "TrainlyAI",
     type: "website",
+    locale: "en_US",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -31,11 +52,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
-      <body className="min-h-full flex flex-col bg-background text-foreground antialiased selection:bg-primary/20 selection:text-foreground">
+    <html lang="en" className={`h-full ${inter.variable}`}>
+      <body className="min-h-full flex flex-col font-sans bg-background text-foreground antialiased selection:bg-primary/20 selection:text-foreground">
         {children}
       </body>
     </html>
   );
 }
-

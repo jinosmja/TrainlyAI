@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sparkles, Briefcase, Layers, Info, Menu, X, ShieldCheck } from "lucide-react";
+import { Sparkles, Briefcase, Layers, Info, Menu, X, ShieldCheck, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { cn } from "@/lib/utils";
@@ -20,28 +20,31 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/85">
       <Container size="default">
         <div className="flex h-16 items-center justify-between">
-          {/* Brand Logo */}
+          {/* Brand Logo - Swiss Clarity with AI-Native Accent */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 font-bold text-lg tracking-tight transition-opacity hover:opacity-90"
+            className="flex items-center gap-3 transition-opacity hover:opacity-90 group"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
-              <Sparkles className="h-5 w-5" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-xs transition-transform group-hover:scale-105">
+              <Sparkles className="h-4.5 w-4.5" />
             </div>
             <div className="flex flex-col">
-              <span className="text-foreground font-black text-xl leading-none">
-                Trainly<span className="text-primary font-bold">AI</span>
-              </span>
-              <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
+              <div className="flex items-center gap-1.5">
+                <span className="text-foreground font-black text-xl tracking-tight leading-none">
+                  Trainly<span className="text-primary font-bold">AI</span>
+                </span>
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-teal-500" title="Live Global Platform" />
+              </div>
+              <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider mt-0.5">
                 Discover • Train • Earn
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Swiss Minimalist Bar */}
           <nav className="hidden md:flex items-center gap-1">
             {NAV_ITEMS.map((item) => {
               const Icon = item.icon;
@@ -55,30 +58,31 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "flex items-center gap-1.5 px-3.5 py-2 rounded-md text-sm font-medium transition-colors",
+                    "flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all duration-150",
                     isActive
-                      ? "text-primary bg-primary/10 font-semibold"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+                      ? "text-primary bg-primary/10 font-bold"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/70"
                   )}
                 >
                   <Icon className="h-4 w-4" />
-                  {item.label}
+                  <span>{item.label}</span>
                 </Link>
               );
             })}
           </nav>
 
           {/* Action CTAs */}
-          <div className="hidden sm:flex items-center gap-2.5">
+          <div className="hidden sm:flex items-center gap-3">
             <Link href="/admin/login">
-              <Button variant="ghost" size="sm" className="text-xs text-muted-foreground">
-                <ShieldCheck className="h-3.5 w-3.5 mr-1" />
+              <Button variant="ghost" size="sm" className="text-xs text-muted-foreground hover:text-foreground">
+                <ShieldCheck className="h-3.5 w-3.5 mr-1 text-slate-500" />
                 Admin
               </Button>
             </Link>
             <Link href="/jobs">
-              <Button size="sm" className="font-semibold shadow-sm">
-                Explore All Jobs
+              <Button size="sm" className="font-semibold shadow-xs gap-1.5">
+                <span>Explore Jobs</span>
+                <ArrowRight className="h-3.5 w-3.5" />
               </Button>
             </Link>
           </div>
@@ -90,6 +94,8 @@ export function Header() {
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
+              className="h-10 w-10 min-h-[44px] min-w-[44px]"
             >
               {mobileMenuOpen ? (
                 <X className="h-5 w-5 text-foreground" />
@@ -114,14 +120,14 @@ export function Header() {
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={cn(
-                      "flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                      "flex items-center gap-3 px-3.5 py-3 rounded-lg text-sm font-medium transition-colors min-h-[44px]",
                       isActive
-                        ? "text-primary bg-primary/10 font-semibold"
+                        ? "text-primary bg-primary/10 font-bold"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
                     )}
                   >
-                    <Icon className="h-4 w-4" />
-                    {item.label}
+                    <Icon className="h-4 w-4 text-primary" />
+                    <span>{item.label}</span>
                   </Link>
                 );
               })}
@@ -131,7 +137,7 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full"
                 >
-                  <Button className="w-full justify-center">
+                  <Button className="w-full justify-center min-h-[44px]">
                     Explore All Jobs
                   </Button>
                 </Link>
@@ -140,7 +146,7 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full"
                 >
-                  <Button variant="outline" className="w-full justify-center text-xs">
+                  <Button variant="outline" className="w-full justify-center text-xs min-h-[44px]">
                     <ShieldCheck className="h-3.5 w-3.5 mr-1.5" />
                     Admin Portal
                   </Button>
@@ -153,4 +159,3 @@ export function Header() {
     </header>
   );
 }
-

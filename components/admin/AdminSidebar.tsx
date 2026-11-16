@@ -13,13 +13,15 @@ import {
   BarChart3,
   FileText,
   ExternalLink,
+  ShieldCheck,
+  AlertTriangle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const ADMIN_NAV = [
   { label: "Overview", href: "/admin", icon: LayoutDashboard },
   { label: "All Jobs", href: "/admin/jobs", icon: Briefcase },
-  { label: "Pending Review", href: "/admin/pending", icon: Clock },
+  { label: "Pending Review", href: "/admin/pending", icon: Clock, badge: "0" },
   { label: "Platforms", href: "/admin/platforms", icon: Layers },
   { label: "Sources & Connectors", href: "/admin/sources", icon: Radio },
   { label: "Referral Links", href: "/admin/referrals", icon: Share2 },
@@ -35,16 +37,16 @@ export function AdminSidebar() {
       <div className="p-4 space-y-6">
         {/* Brand */}
         <div className="flex items-center gap-2.5 px-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-xs">
             <Sparkles className="h-4 w-4" />
           </div>
           <div>
-            <div className="text-sm font-bold text-foreground">TrainlyAI Admin</div>
-            <div className="text-[10px] text-muted-foreground uppercase font-semibold">Moderation & Ops</div>
+            <div className="text-sm font-extrabold text-foreground tracking-tight">TrainlyAI Admin</div>
+            <div className="text-[10px] text-teal-600 dark:text-teal-400 uppercase font-bold tracking-wider">Ops & Moderation</div>
           </div>
         </div>
 
-        {/* Navigation */}
+        {/* Navigation - Data-Dense Swiss Layout */}
         <nav className="space-y-1">
           {ADMIN_NAV.map((item) => {
             const Icon = item.icon;
@@ -58,14 +60,28 @@ export function AdminSidebar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+                  "flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150",
                   isActive
-                    ? "bg-primary text-primary-foreground font-semibold"
+                    ? "bg-primary text-primary-foreground shadow-xs"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
               >
-                <Icon className="h-4 w-4 shrink-0" />
-                <span>{item.label}</span>
+                <div className="flex items-center gap-2.5">
+                  <Icon className="h-4 w-4 shrink-0" />
+                  <span>{item.label}</span>
+                </div>
+                {item.badge && (
+                  <span
+                    className={cn(
+                      "text-[10px] px-1.5 py-0.2 rounded-full font-mono font-bold",
+                      isActive
+                        ? "bg-white/20 text-white"
+                        : "bg-muted text-muted-foreground"
+                    )}
+                  >
+                    {item.badge}
+                  </span>
+                )}
               </Link>
             );
           })}
@@ -76,16 +92,15 @@ export function AdminSidebar() {
       <div className="p-4 border-t border-border space-y-2">
         <Link
           href="/"
-          className="flex items-center justify-between px-3 py-2 text-xs font-medium text-muted-foreground hover:text-foreground rounded-md hover:bg-muted transition-colors"
+          className="flex items-center justify-between px-3 py-2 text-xs font-semibold text-muted-foreground hover:text-foreground rounded-md hover:bg-muted transition-colors"
         >
           <span>View Public Website</span>
-          <ExternalLink className="h-3.5 w-3.5" />
+          <ExternalLink className="h-3.5 w-3.5 text-primary" />
         </Link>
-        <div className="px-3 text-[11px] text-muted-foreground/60 font-mono">
-          TrainlyAI v0.1.0 • Admin Shell
+        <div className="px-3 text-[10px] text-muted-foreground/70 font-mono">
+          TrainlyAI v0.1.0 • Data-Dense Ops
         </div>
       </div>
     </aside>
   );
 }
-
